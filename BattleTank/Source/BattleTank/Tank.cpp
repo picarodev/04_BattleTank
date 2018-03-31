@@ -11,6 +11,12 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+void ATank::AimAt(FVector hitLocation)
+{
+    auto tankName = GetName();
+    UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *tankName, *(hitLocation.ToString()));
+}
+
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {

@@ -19,6 +19,8 @@ private:
     // Sets default values for this pawn's properties
     ATank* GetControlledTank() const;
 
+    void Tick(float DeltaTime) override;
+    
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
 

@@ -13,6 +13,19 @@ ATank* ATankAIController::GetControlledTank() const
     return tank;
 }
 
+void ATankAIController::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    if (ATank* controlledTank = GetControlledTank())
+    {
+        if (ATank* playerTank = GetPlayerTank())
+        {
+            controlledTank->AimAt(playerTank->GetActorLocation());
+        }
+    }
+}
+
 // Called when the game starts or when spawned
 void ATankAIController::BeginPlay()
 {
