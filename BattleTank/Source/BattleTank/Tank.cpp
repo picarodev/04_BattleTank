@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
+#include "Runtime/Engine/Classes/GameFramework/Actor.h"
 #include "Runtime/Engine/Classes/GameFramework/Controller.h"
 
 
@@ -30,6 +31,11 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ATank::SetBarrelReference(UStaticMeshComponent * barrelToSet)
+{
+    TankAimingComponent->SetBarrelReference( barrelToSet );
 }
 
 // Called to bind functionality to input

@@ -1,5 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Runtime/Engine/Classes/GameFramework/Actor.h"
+#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "TankAimingComponent.h"
 
 
@@ -24,6 +26,11 @@ void UTankAimingComponent::BeginPlay()
 }
 
 
+void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * barrelToSet)
+{
+    Barrel = barrelToSet;
+}
+
 // Called every frame
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -34,6 +41,6 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector hitLocation) const
 {
-    UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *(GetOwner()->GetName()), *(hitLocation.ToString()));
+    UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *(GetOwner()->GetName()), *(hitLocation.ToString()), *(Barrel->GetComponentLocation().ToString()));
 
 }

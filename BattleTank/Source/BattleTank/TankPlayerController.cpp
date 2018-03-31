@@ -89,13 +89,9 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector worldLocation, FVec
 
     if (AActor* hitActor = hit.GetActor())
     {
-        UE_LOG(LogTemp, Warning, TEXT("The struck actor is %s"), *(hitActor->GetName()));
+        //UE_LOG(LogTemp, Warning, TEXT("The struck actor is %s"), *(hitActor->GetName()));
         hitLocation = hit.Location;
         return true;
-    }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("No Actor struck"));
     }
 
     return false;
