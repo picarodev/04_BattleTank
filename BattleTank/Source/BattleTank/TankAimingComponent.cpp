@@ -80,12 +80,17 @@ void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed)
         FCollisionResponseParams responseParams;
         TArray<AActor*> actorsToIgnore;
         bool bDrawDebug = false;
+        float timeSeconds = GetWorld()->GetTimeSeconds();
         if (UGameplayStatics::SuggestProjectileVelocity(context, tossVelocity, start, end, speed, highArc,
             collisionRadius, overridGZ, trace, responseParams, actorsToIgnore, bDrawDebug))
         {
             FVector tossNormalized = tossVelocity.GetSafeNormal();
-            UE_LOG(LogTemp, Warning, TEXT("Fire direction %s"), *tossNormalized.ToString());
+            UE_LOG(LogTemp, Warning, TEXT("%f: Fire direction %s"), timeSeconds, *tossNormalized.ToString());
             MoveBarrelTowards(tossNormalized);
+        }
+        else
+        {
+            UE_LOG(LogTemp, Warning, TEXT("%f: No Solution Found"), timeSeconds);
         }
     }
 }

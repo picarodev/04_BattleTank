@@ -5,7 +5,7 @@
 
 
 
-void UTankBarrel::Elevate(float degreesPerSecond)
+void UTankBarrel::Elevate(float relativeSpeed)
 {
 
 }
