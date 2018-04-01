@@ -16,7 +16,7 @@ ATank::ATank()
 
 void ATank::AimAt(FVector hitLocation)
 {
-    TankAimingComponent->AimAt(hitLocation);
+    TankAimingComponent->AimAt(hitLocation, LaunchSpeed);
 }
 
 // Called when the game starts or when spawned
