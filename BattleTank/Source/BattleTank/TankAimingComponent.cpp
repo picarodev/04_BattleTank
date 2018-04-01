@@ -5,6 +5,7 @@
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Core/Public/Math/Vector.h"
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
+#include "TankBarrel.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 
 
@@ -29,7 +30,7 @@ void UTankAimingComponent::BeginPlay()
 }
 
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * barrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrelToSet)
 {
     Barrel = barrelToSet;
 }
@@ -42,7 +43,27 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed) const
+UStaticMeshComponent* UTankAimingComponent::GetTurret() const
+{
+    if (Barrel)
+    {
+        TArray<USceneComponent*> parents;
+        Barrel->GetParentComponents(parents);
+        return Cast<UStaticMeshComponent>(parents[0]);
+    }
+
+    return nullptr;
+}
+
+void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
+{
+    FRotator barrelRotator = Barrel->GetForwardVector().Rotation();
+    FRotator aimAsRotator = aimDirection.Rotation();
+    auto delta = aimAsRotator - barrelRotator;
+    Barrel->Elevate(5);
+}
+
+void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed)
 {
     if (Barrel)
     {
@@ -63,11 +84,8 @@ void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed) const
             collisionRadius, overridGZ, trace, responseParams, actorsToIgnore, bDrawDebug))
         {
             FVector tossNormalized = tossVelocity.GetSafeNormal();
-            FRotator rotation = tossNormalized.Rotation();
-            Barrel->SetWorldRotation(rotation);
+            UE_LOG(LogTemp, Warning, TEXT("Fire direction %s"), *tossNormalized.ToString());
+            MoveBarrelTowards(tossNormalized);
         }
     }
-    UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), LaunchSpeed);
-    //UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *(GetOwner()->GetName()), *(hitLocation.ToString()), *(Barrel->GetComponentLocation().ToString()));
-
 }

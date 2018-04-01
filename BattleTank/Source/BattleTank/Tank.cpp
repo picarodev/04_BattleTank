@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
+#include "TankBarrel.h"
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
 #include "Runtime/Engine/Classes/GameFramework/Controller.h"
 
@@ -33,7 +34,7 @@ void ATank::Tick(float DeltaTime)
 
 }
 
-void ATank::SetBarrelReference(UStaticMeshComponent * barrelToSet)
+void ATank::SetBarrelReference(UTankBarrel * barrelToSet)
 {
     TankAimingComponent->SetBarrelReference( barrelToSet );
 }
