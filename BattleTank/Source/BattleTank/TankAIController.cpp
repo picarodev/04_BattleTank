@@ -2,6 +2,7 @@
 
 #include "TankAIController.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
+#include "Tank.h"
 #include "TankPlayerController.h"
 #include "BattleTank.h"
 

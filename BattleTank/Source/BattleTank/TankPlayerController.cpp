@@ -4,6 +4,7 @@
 #include "Runtime/Engine/Classes/Components/PrimitiveComponent.h"
 #include "Runtime/CoreUObject/Public/UObject/NoExportTypes.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
+#include "Tank.h"
 #include "BattleTank.h"
 
 

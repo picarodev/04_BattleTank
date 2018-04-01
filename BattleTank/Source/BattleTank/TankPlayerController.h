@@ -2,9 +2,10 @@
 
 #pragma once
 
+class ATank;
+
 #include <utility>
 #include "CoreMinimal.h"
-#include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
@@ -19,13 +20,13 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
-    ATank * GetControlledTank() const;
+    ATank* GetControlledTank() const;
 	
     void BeginPlay() override;
 
     void Tick(float DeltaTime) override;
 
-    bool GetSightRayHitLocation(FVector & hitLocation) const;
+    bool GetSightRayHitLocation(FVector& hitLocation) const;
 
     bool GetLookDirection(FVector2D screenLocation, FVector &worldLocation, FVector &worldDirection) const;
 
