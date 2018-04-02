@@ -6,6 +6,7 @@
 #include "Runtime/Core/Public/Math/Vector.h"
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 
 
@@ -35,6 +36,11 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrelToSet)
     Barrel = barrelToSet;
 }
 
+void UTankAimingComponent::SetTurretReference(UTankTurret* turretToSet)
+{
+    Turret = turretToSet;
+}
+
 // Called every frame
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -57,10 +63,16 @@ UStaticMeshComponent* UTankAimingComponent::GetTurret() const
 
 void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
 {
-    FRotator barrelRotator = Barrel->GetForwardVector().Rotation();
     FRotator aimAsRotator = aimDirection.Rotation();
-    auto delta = aimAsRotator - barrelRotator;
-    Barrel->Elevate(delta.Pitch);
+
+    FRotator turretRotator = Turret->GetForwardVector().Rotation();
+    auto turretDelta = aimAsRotator - turretRotator;
+
+    FRotator barrelRotator = Barrel->GetForwardVector().Rotation();
+    auto barrelDelta = aimAsRotator - barrelRotator;
+
+    Turret->Rotate(barrelDelta.Yaw);
+    Barrel->Elevate(barrelDelta.Pitch);
 }
 
 void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed)

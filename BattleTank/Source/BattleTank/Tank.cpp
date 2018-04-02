@@ -2,6 +2,7 @@
 
 #include "Tank.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "TankAimingComponent.h"
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
 #include "Runtime/Engine/Classes/GameFramework/Controller.h"
@@ -31,6 +32,11 @@ void ATank::BeginPlay()
 void ATank::SetBarrelReference(UTankBarrel * barrelToSet)
 {
     TankAimingComponent->SetBarrelReference( barrelToSet );
+}
+
+void ATank::SetTurretReference(UTankTurret * turretToSet)
+{
+    TankAimingComponent->SetTurretReference(turretToSet);
 }
 
 // Called to bind functionality to input
