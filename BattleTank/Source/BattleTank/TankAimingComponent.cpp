@@ -60,7 +60,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
     FRotator barrelRotator = Barrel->GetForwardVector().Rotation();
     FRotator aimAsRotator = aimDirection.Rotation();
     auto delta = aimAsRotator - barrelRotator;
-    Barrel->Elevate(5);
+    Barrel->Elevate(delta.Pitch);
 }
 
 void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed)
