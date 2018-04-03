@@ -80,21 +80,16 @@ void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed)
     if (Barrel)
     {
         UWorld* world = GetWorld();
-        const UObject* context = this->GetWorld();
         FVector tossVelocity;
         FVector start = Barrel->GetSocketLocation(FName("NozelSocket"));
         FVector end = hitLocation;
         float speed = LaunchSpeed;
-        bool highArc = false;
-        float collisionRadius = 0.01f;
-        float overridGZ = 0.0f;
-        ESuggestProjVelocityTraceOption::Type trace = ESuggestProjVelocityTraceOption::Type::DoNotTrace;
         FCollisionResponseParams responseParams;
         TArray<AActor*> actorsToIgnore;
-        bool bDrawDebug = false;
+
         float timeSeconds = GetWorld()->GetTimeSeconds();
-        if (UGameplayStatics::SuggestProjectileVelocity(context, tossVelocity, start, end, speed, highArc,
-            collisionRadius, overridGZ, trace, responseParams, actorsToIgnore, bDrawDebug))
+        if (UGameplayStatics::SuggestProjectileVelocity(world, tossVelocity, start, end, speed, false,
+            0.0f, 0.0f, ESuggestProjVelocityTraceOption::Type::DoNotTrace, responseParams, actorsToIgnore, false))
         {
             FVector tossNormalized = tossVelocity.GetSafeNormal();
             UE_LOG(LogTemp, Warning, TEXT("%f: Fire direction %s"), timeSeconds, *tossNormalized.ToString());
