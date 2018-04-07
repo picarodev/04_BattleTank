@@ -5,6 +5,7 @@
 class UTankAimingComponent;
 class UTankBarrel;
 class UTankTurret;
+class AProjectile;
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -43,4 +44,9 @@ private:
 	
     UPROPERTY(EditAnywhere, Category = Firing)
     float LaunchSpeed = 3000;
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UTankBarrel* Barrel = nullptr;
 };

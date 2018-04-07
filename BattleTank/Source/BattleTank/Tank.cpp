@@ -4,6 +4,8 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "TankAimingComponent.h"
+#include "Projectile.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
 #include "Runtime/Engine/Classes/GameFramework/Controller.h"
 
@@ -32,6 +34,7 @@ void ATank::BeginPlay()
 void ATank::SetBarrelReference(UTankBarrel * barrelToSet)
 {
     TankAimingComponent->SetBarrelReference( barrelToSet );
+	Barrel = barrelToSet;
 }
 
 void ATank::SetTurretReference(UTankTurret * turretToSet)
@@ -41,7 +44,21 @@ void ATank::SetTurretReference(UTankTurret * turretToSet)
 
 void ATank::Fire()
 {
-    UE_LOG(LogTemp, Warning, TEXT("BOOOOOM!!"))
+
+	if (Barrel)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("FIRING!!"));
+		UWorld* world = GetWorld();
+		world->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("NozelSocket")),
+			Barrel->GetSocketRotation(FName("NozelSocket"))
+			);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed to fire."));
+	}
 }
 
 // Called to bind functionality to input
