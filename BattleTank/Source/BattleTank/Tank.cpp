@@ -28,7 +28,11 @@ void ATank::AimAt(FVector hitLocation)
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	if (!ProjectileBlueprint)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No projectile blueprint set in Tank blueprint, using default"));
+	}
 }
 
 void ATank::SetBarrelReference(UTankBarrel * barrelToSet)
@@ -44,20 +48,28 @@ void ATank::SetTurretReference(UTankTurret * turretToSet)
 
 void ATank::Fire()
 {
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (Barrel)
+	if (Barrel && isReloaded)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("FIRING!!"));
 		UWorld* world = GetWorld();
-		world->SpawnActor<AProjectile>(
+		auto projectile = world->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("NozelSocket")),
 			Barrel->GetSocketRotation(FName("NozelSocket"))
 			);
+
+		if (projectile)
+		{
+			projectile->LaunchProjectile(LaunchSpeed);
+		}
+
+		LastFireTime = FPlatformTime::Seconds();
+		UE_LOG(LogTemp, Warning, TEXT("Projectile blueprint is %s"), *ProjectileBlueprint->GetName());
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Failed to fire."));
+		//UE_LOG(LogTemp, Warning, TEXT("Failed to fire."));
 	}
 }
 
