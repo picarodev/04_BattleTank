@@ -42,13 +42,14 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	
-    UPROPERTY(EditAnywhere, Category = Firing)
+    UPROPERTY(EditDefaultsOnly, Category = Firing)
     float LaunchSpeed = 3000;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
-	double ReloadTimeInSeconds = 3.0;
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+    double ReloadTimeInSeconds = 3.0;
 
 	double LastFireTime = -1e6;
 
