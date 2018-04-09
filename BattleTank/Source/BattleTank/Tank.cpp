@@ -31,7 +31,7 @@ void ATank::BeginPlay()
 
 	if (!ProjectileBlueprint)
 	{
-		UE_LOG(LogTemp, Error, TEXT("No projectile blueprint set in Tank blueprint, using default"));
+		UE_LOG(LogTemp, Error, TEXT("No projectile blueprint set in Tank blueprint, using default"));  // TODO
 	}
 }
 
