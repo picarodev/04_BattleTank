@@ -4,4 +4,7 @@
 
 
 
-
+void UTankMovementComponent::IntendMoveForward(float throwForward)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Intended throw forward is %f"), throwForward)
+}

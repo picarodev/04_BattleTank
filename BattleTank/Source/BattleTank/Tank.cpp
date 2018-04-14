@@ -4,6 +4,7 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "Projectile.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
@@ -17,6 +18,8 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
     TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming component"));
+
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement component"));
 }
 
 void ATank::AimAt(FVector hitLocation)
@@ -31,7 +34,7 @@ void ATank::BeginPlay()
 
 	if (!ProjectileBlueprint)
 	{
-		UE_LOG(LogTemp, Error, TEXT("No projectile blueprint set in Tank blueprint, using default"));  // TODO
+		UE_LOG(LogTemp, Warning, TEXT("No projectile blueprint set in Tank blueprint, using default"));  // TODO
 	}
 }
 
