@@ -18,8 +18,6 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
     TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming component"));
-
-	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement component"));
 }
 
 void ATank::AimAt(FVector hitLocation)
@@ -53,7 +51,7 @@ void ATank::Fire()
 {
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (Barrel && isReloaded)
+	if (Barrel && isReloaded && ProjectileBlueprint)
 	{
 		UWorld* world = GetWorld();
 		auto projectile = world->SpawnActor<AProjectile>(
