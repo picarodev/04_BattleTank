@@ -26,5 +26,7 @@ private:
     virtual void BeginPlay() override;
 
     ATank* GetPlayerTank() const;
+
+	float AcceptanceRadius = 3000;
 	
 };
