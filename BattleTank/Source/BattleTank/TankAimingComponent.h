@@ -2,12 +2,20 @@
 
 #pragma once
 
-class UTankBarrel;
-class UTankTurret;
-
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
+
+UENUM()
+enum class EFiringStatus : uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
+
+class UTankBarrel;
+class UTankTurret;
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -31,7 +39,13 @@ public:
     // Called when the game starts
     virtual void BeginPlay() override;
 
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFiringStatus FiringStatus = EFiringStatus::Reloading;
+
+
 private:	
+
     UStaticMeshComponent* GetTurret() const;
 
     void MoveBarrelTowards(FVector aimDirection);
