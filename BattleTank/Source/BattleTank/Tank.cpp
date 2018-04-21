@@ -39,6 +39,8 @@ void ATank::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No projectile blueprint set in Tank blueprint, using default"));  // TODO
 	}
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 void ATank::Fire()

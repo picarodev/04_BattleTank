@@ -59,16 +59,19 @@ UStaticMeshComponent* UTankAimingComponent::GetTurret() const
 
 void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
 {
-    FRotator aimAsRotator = aimDirection.Rotation();
+	if (ensure(Barrel) && ensure(Turret))
+	{
+		FRotator aimAsRotator = aimDirection.Rotation();
 
-    FRotator turretRotator = Turret->GetForwardVector().Rotation();
-    auto turretDelta = aimAsRotator - turretRotator;
+		FRotator turretRotator = Turret->GetForwardVector().Rotation();
+		auto turretDelta = aimAsRotator - turretRotator;
 
-    FRotator barrelRotator = Barrel->GetForwardVector().Rotation();
-    auto barrelDelta = aimAsRotator - barrelRotator;
+		FRotator barrelRotator = Barrel->GetForwardVector().Rotation();
+		auto barrelDelta = aimAsRotator - barrelRotator;
 
-    Turret->Rotate(barrelDelta.Yaw);
-    Barrel->Elevate(barrelDelta.Pitch);
+		Turret->Rotate(barrelDelta.Yaw);
+		Barrel->Elevate(barrelDelta.Pitch);
+	}
 }
 
 void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed)

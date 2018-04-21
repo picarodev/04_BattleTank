@@ -30,6 +30,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialize(UTankBarrel* barrel, UTankTurret* turret);
 
+	
 
     // Called every frame
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
