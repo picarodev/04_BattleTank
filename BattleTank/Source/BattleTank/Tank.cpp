@@ -17,7 +17,7 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	UE_LOG(LogTemp, Warning, TEXT("ATank::ATank() called for %s"), *(this->GetName()))
+	UE_LOG(LogTemp, Warning, TEXT("C++ call to ATank::ATank() (%s)"), *(this->GetName()))
 
 }
 
@@ -34,7 +34,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("Tank::BeginPlay: Inside beginplay..."));  // TODO
+	UE_LOG(LogTemp, Warning, TEXT("C++ call to ATank::BeginPlay() (%s)"), *(this->GetName()))
 
 	if (!ProjectileBlueprint)
 	{
