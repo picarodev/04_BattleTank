@@ -7,6 +7,7 @@
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 
 
@@ -26,8 +27,10 @@ void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	if (!ensure(ProjectileBlueprint))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No projectile blueprint set in Tank blueprint, using default"));  // TODO
+	}
 }
 
 
@@ -98,3 +101,30 @@ void UTankAimingComponent::AimAt(FVector hitLocation)
         }
     }
 }
+
+void UTankAimingComponent::Fire()
+{
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (ensure(Barrel && ProjectileBlueprint))
+	{
+		if (isReloaded)
+		{
+			UWorld* world = GetWorld();
+			auto projectile = world->SpawnActor<AProjectile>(
+				ProjectileBlueprint,
+				Barrel->GetSocketLocation(FName("NozelSocket")),
+				Barrel->GetSocketRotation(FName("NozelSocket"))
+				);
+
+			if (projectile)
+			{
+				projectile->LaunchProjectile(LaunchSpeed);
+				FiringStatus = EFiringStatus::Reloading;
+			}
+
+			LastFireTime = FPlatformTime::Seconds();
+		}
+	}
+}
+

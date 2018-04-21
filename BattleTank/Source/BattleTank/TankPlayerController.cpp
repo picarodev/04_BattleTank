@@ -90,7 +90,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector worldLocation, FVec
     );
 
 	AActor* hitActor = hit.GetActor();
-    if (ensure(hitActor))
+    if (hitActor)
     {
         hitLocation = hit.Location;
         return true;
