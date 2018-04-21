@@ -73,7 +73,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
 
 void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed)
 {
-    if (Barrel)
+    if (ensure(Barrel))
     {
         UWorld* world = GetWorld();
         FVector tossVelocity;

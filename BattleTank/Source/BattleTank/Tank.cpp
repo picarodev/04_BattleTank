@@ -23,7 +23,7 @@ ATank::ATank()
 
 void ATank::AimAt(FVector hitLocation)
 {
-	if (TankAimingComponent)
+	if (ensure(TankAimingComponent))
 	{
 		TankAimingComponent->AimAt(hitLocation, LaunchSpeed);
 	}
@@ -36,7 +36,7 @@ void ATank::BeginPlay()
 
 	UE_LOG(LogTemp, Warning, TEXT("C++ call to ATank::BeginPlay() (%s)"), *(this->GetName()))
 
-	if (!ProjectileBlueprint)
+	if (!ensure(ProjectileBlueprint))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No projectile blueprint set in Tank blueprint, using default"));  // TODO
 	}
@@ -46,24 +46,24 @@ void ATank::Fire()
 {
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (Barrel && isReloaded && ProjectileBlueprint)
+	if (ensure(Barrel && ProjectileBlueprint))
 	{
-		UWorld* world = GetWorld();
-		auto projectile = world->SpawnActor<AProjectile>(
-			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("NozelSocket")),
-			Barrel->GetSocketRotation(FName("NozelSocket"))
-			);
-
-		if (projectile)
+		if (isReloaded)
 		{
-			projectile->LaunchProjectile(LaunchSpeed);
-		}
+			UWorld* world = GetWorld();
+			auto projectile = world->SpawnActor<AProjectile>(
+				ProjectileBlueprint,
+				Barrel->GetSocketLocation(FName("NozelSocket")),
+				Barrel->GetSocketRotation(FName("NozelSocket"))
+				);
 
-		LastFireTime = FPlatformTime::Seconds();
-	}
-	else
-	{
+			if (projectile)
+			{
+				projectile->LaunchProjectile(LaunchSpeed);
+			}
+
+			LastFireTime = FPlatformTime::Seconds();
+		}
 	}
 }
 

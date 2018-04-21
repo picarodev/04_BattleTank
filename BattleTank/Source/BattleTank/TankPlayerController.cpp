@@ -20,12 +20,13 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::BeginPlay()
 {
     Super::BeginPlay();
+	ATank* controlledTank = GetControlledTank();
 
-    if (ATank* controlledTank = GetControlledTank())
+    if (ensure(controlledTank))
     {
 		UE_LOG(LogTemp, Warning, TEXT("Player Controller is controlling %s"), *(controlledTank->GetName()));
-
-		if (UTankAimingComponent* aimingComponent = controlledTank->FindComponentByClass<UTankAimingComponent>())
+		UTankAimingComponent* aimingComponent = controlledTank->FindComponentByClass<UTankAimingComponent>();
+		if (ensure(aimingComponent))
 		{
 			FoundAimingComponent(aimingComponent);
 		}
@@ -97,7 +98,8 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector worldLocation, FVec
         traceParameters
     );
 
-    if (AActor* hitActor = hit.GetActor())
+	AActor* hitActor = hit.GetActor();
+    if (ensure(hitActor))
     {
         hitLocation = hit.Location;
         return true;
@@ -108,7 +110,8 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector worldLocation, FVec
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-    if (ATank* controlledTank = GetControlledTank())
+	ATank* controlledTank = GetControlledTank();
+    if (ensure(controlledTank))
     {
         FVector hitLocation;
         

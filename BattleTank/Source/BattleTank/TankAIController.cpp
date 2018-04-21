@@ -33,10 +33,11 @@ void ATankAIController::Tick(float DeltaTime)
 void ATankAIController::BeginPlay()
 {
     Super::BeginPlay();
-
-    if (ATank* controlledTank = GetControlledTank())
+	ATank* controlledTank = GetControlledTank();
+    if (ensure(controlledTank))
     {
-        if (ATank* playerTank = GetPlayerTank())
+		ATank* playerTank = GetPlayerTank();
+        if (ensure(playerTank))
         {
             UE_LOG(LogTemp, Warning, TEXT("AI Controller controlling %s says that the player tank is %s"), *(controlledTank->GetName()), *(playerTank->GetName()))
         }
@@ -53,9 +54,11 @@ void ATankAIController::BeginPlay()
 
 ATank* ATankAIController::GetPlayerTank() const
 {
-    if (APlayerController* controller = GetWorld()->GetFirstPlayerController())
+	APlayerController* controller = GetWorld()->GetFirstPlayerController();
+    if (ensure(controller))
     {
-        if (APawn* pawn = controller->GetPawn())
+		APawn* pawn = controller->GetPawn();
+        if (ensure(pawn))
         {
             return Cast<ATank>(pawn);
         }
