@@ -31,6 +31,8 @@ void UTankAimingComponent::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No projectile blueprint set in Tank blueprint, using default"));  // TODO
 	}
+
+	LastFireTime = FPlatformTime::Seconds();
 }
 
 
@@ -45,7 +47,20 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	if (IsReloaded())
+	{
+		FiringStatus = EFiringStatus::Aiming;
+	}
+	else
+	{
+		FiringStatus = EFiringStatus::Reloading;
+	}
+}
+
+bool UTankAimingComponent::IsReloaded() const
+{
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	return isReloaded;
 }
 
 UStaticMeshComponent* UTankAimingComponent::GetTurret() const
@@ -104,23 +119,20 @@ void UTankAimingComponent::AimAt(FVector hitLocation)
 
 void UTankAimingComponent::Fire()
 {
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (ensure(Barrel && ProjectileBlueprint))
+	if (FiringStatus != EFiringStatus::Reloading)
 	{
-		if (isReloaded)
+		if (ensure(Barrel) && ensure(ProjectileBlueprint))
 		{
 			UWorld* world = GetWorld();
 			auto projectile = world->SpawnActor<AProjectile>(
-				ProjectileBlueprint,
-				Barrel->GetSocketLocation(FName("NozelSocket")),
-				Barrel->GetSocketRotation(FName("NozelSocket"))
-				);
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("NozelSocket")),
+			Barrel->GetSocketRotation(FName("NozelSocket"))
+			);
 
 			if (projectile)
 			{
 				projectile->LaunchProjectile(LaunchSpeed);
-				FiringStatus = EFiringStatus::Reloading;
 			}
 
 			LastFireTime = FPlatformTime::Seconds();

@@ -34,7 +34,7 @@ public:
 	
 
     // Called every frame
-    virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+    void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
     void AimAt(FVector hitLocation);
 
@@ -53,7 +53,8 @@ protected:
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
 
 
-private:	
+private:
+	bool IsReloaded() const;
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
