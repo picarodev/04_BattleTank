@@ -23,7 +23,6 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 	IntendMoveForward(dot);
 	auto crossZ = FVector::CrossProduct(tankForward, aiForwardIntention).Z;
 	IntendMoveRight(crossZ);
-	UE_LOG(LogTemp, Warning, TEXT("%s request direct move of  %s"), *owner->GetName(), *MoveVelocity.ToString());
 }
 
 void UTankMovementComponent::IntendMoveForward(float throwForward)

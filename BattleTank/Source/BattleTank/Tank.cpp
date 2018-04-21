@@ -16,6 +16,9 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+
+	UE_LOG(LogTemp, Warning, TEXT("ATank::ATank() called for %s"), *(this->GetName()))
+
 }
 
 void ATank::AimAt(FVector hitLocation)
@@ -30,6 +33,8 @@ void ATank::AimAt(FVector hitLocation)
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("Tank::BeginPlay: Inside beginplay..."));  // TODO
 
 	if (!ProjectileBlueprint)
 	{
@@ -56,11 +61,9 @@ void ATank::Fire()
 		}
 
 		LastFireTime = FPlatformTime::Seconds();
-		UE_LOG(LogTemp, Warning, TEXT("Projectile blueprint is %s"), *ProjectileBlueprint->GetName());
 	}
 	else
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Failed to fire."));
 	}
 }
 

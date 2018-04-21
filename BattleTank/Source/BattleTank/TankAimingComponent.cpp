@@ -88,12 +88,10 @@ void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed)
             0.0f, 0.0f, ESuggestProjVelocityTraceOption::Type::DoNotTrace, responseParams, actorsToIgnore, false))
         {
             FVector tossNormalized = tossVelocity.GetSafeNormal();
-            //UE_LOG(LogTemp, Warning, TEXT("%f: Fire direction %s"), timeSeconds, *tossNormalized.ToString());
             MoveBarrelTowards(tossNormalized);
         }
         else
         {
-            //UE_LOG(LogTemp, Warning, TEXT("%f: No Solution Found"), timeSeconds);
         }
     }
 }

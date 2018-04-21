@@ -42,7 +42,6 @@ FVector2D ATankPlayerController::GetScreenLocation() const
     int32 viewportSizeX, viewportSizeY;
     GetViewportSize(viewportSizeX, viewportSizeY);
     FVector2D screenLocation = FVector2D(viewportSizeX * CrossHairXLocation, viewportSizeY * CrossHairYLocation);
-    //UE_LOG(LogTemp, Warning, TEXT("Screen Location: %s"), *screenLocation.ToString());
     return screenLocation;
 }
 
@@ -66,7 +65,6 @@ bool ATankPlayerController::GetLookDirection(FVector2D screenLocation, FVector &
 {
     if (DeprojectScreenPositionToWorld(screenLocation.X, screenLocation.Y, worldLocation, worldDirection))
     {
-        //UE_LOG(LogTemp, Warning, TEXT("Screen Location: %s, World Location: %s, World Direction: %s"), *screenLocation.ToString(), *worldLocation.ToString(), *worldDirection.ToString());
         return true;
     }
 
@@ -90,7 +88,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector worldLocation, FVec
 
     if (AActor* hitActor = hit.GetActor())
     {
-        //UE_LOG(LogTemp, Warning, TEXT("The struck actor is %s"), *(hitActor->GetName()));
         hitLocation = hit.Location;
         return true;
     }
@@ -106,7 +103,6 @@ void ATankPlayerController::AimTowardsCrosshair()
         
         if (GetSightRayHitLocation(hitLocation))
         {
-            //UE_LOG(LogTemp, Warning, TEXT("Hit location is %s"), *hitLocation.ToString());
 
         }
     }
