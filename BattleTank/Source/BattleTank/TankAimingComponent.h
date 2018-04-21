@@ -55,6 +55,8 @@ protected:
 
 private:
 	bool IsReloaded() const;
+	bool IsBarrelMoving() const;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
@@ -65,10 +67,12 @@ private:
 
     UStaticMeshComponent* GetTurret() const;
 
-    void MoveBarrelTowards(FVector aimDirection);
+    void MoveBarrelTowards();
 
     UTankBarrel* Barrel = nullptr;
 		
     UTankTurret* Turret = nullptr;
+
+	FVector AimDirection;
 
 };

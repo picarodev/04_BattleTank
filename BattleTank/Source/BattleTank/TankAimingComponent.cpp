@@ -47,14 +47,28 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (IsReloaded())
-	{
-		FiringStatus = EFiringStatus::Aiming;
-	}
-	else
+	if (!IsReloaded())
 	{
 		FiringStatus = EFiringStatus::Reloading;
 	}
+	else if (!IsBarrelMoving())
+	{
+		FiringStatus = EFiringStatus::Locked;
+	}
+	else
+	{
+		FiringStatus = EFiringStatus::Aiming;
+	}
+}
+
+bool UTankAimingComponent::IsBarrelMoving() const
+{
+	if (ensure(Barrel))
+	{
+		return !AimDirection.Equals(Barrel->GetForwardVector().GetSafeNormal(), 0.1);
+	}
+
+	return false;
 }
 
 bool UTankAimingComponent::IsReloaded() const
@@ -75,12 +89,11 @@ UStaticMeshComponent* UTankAimingComponent::GetTurret() const
     return nullptr;
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
+void UTankAimingComponent::MoveBarrelTowards()
 {
 	if (ensure(Barrel) && ensure(Turret))
 	{
-		FRotator aimAsRotator = aimDirection.Rotation();
-
+		FRotator aimAsRotator = AimDirection.Rotation();
 		FRotator turretRotator = Turret->GetForwardVector().Rotation();
 		auto turretDelta = aimAsRotator - turretRotator;
 
@@ -109,7 +122,8 @@ void UTankAimingComponent::AimAt(FVector hitLocation)
             0.0f, 0.0f, ESuggestProjVelocityTraceOption::Type::DoNotTrace, responseParams, actorsToIgnore, false))
         {
             FVector tossNormalized = tossVelocity.GetSafeNormal();
-            MoveBarrelTowards(tossNormalized);
+			AimDirection = tossNormalized;
+            MoveBarrelTowards();
         }
         else
         {
