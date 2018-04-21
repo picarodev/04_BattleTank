@@ -3,6 +3,7 @@
 #pragma once
 
 class ATank;
+class UTankAimingComponent;
 
 #include <utility>
 #include "CoreMinimal.h"
@@ -23,6 +24,8 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* aimingComponentReference);
 
 public:
 

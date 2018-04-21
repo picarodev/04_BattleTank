@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 #include "Runtime/Engine/Classes/Components/PrimitiveComponent.h"
 #include "Runtime/CoreUObject/Public/UObject/NoExportTypes.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
@@ -22,12 +23,22 @@ void ATankPlayerController::BeginPlay()
 
     if (ATank* controlledTank = GetControlledTank())
     {
-        UE_LOG(LogTemp, Warning, TEXT("Player Controller is controlling %s"), *(controlledTank->GetName()))
-    }
+		UE_LOG(LogTemp, Warning, TEXT("Player Controller is controlling %s"), *(controlledTank->GetName()));
+
+		if (UTankAimingComponent* aimingComponent = controlledTank->FindComponentByClass<UTankAimingComponent>())
+		{
+			FoundAimingComponent(aimingComponent);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("%s has no aiming component"), *controlledTank->GetName());
+		}
+	}
     else
     {
         UE_LOG(LogTemp, Warning, TEXT("Player controller is not controlling a tank"))
     }
+
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
