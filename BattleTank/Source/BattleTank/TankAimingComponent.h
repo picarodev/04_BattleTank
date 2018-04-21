@@ -27,9 +27,9 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-    void SetBarrelReference(UTankBarrel* barrelToSet);
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialize(UTankBarrel* barrel, UTankTurret* turret);
 
-    void SetTurretReference(UTankTurret* barrelToSet);
 
     // Called every frame
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

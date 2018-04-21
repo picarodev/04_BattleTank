@@ -31,14 +31,10 @@ void UTankAimingComponent::BeginPlay()
 }
 
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrelToSet)
+void UTankAimingComponent::Initialize(UTankBarrel * barrel, UTankTurret * turret)
 {
-    Barrel = barrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret* turretToSet)
-{
-    Turret = turretToSet;
+	Barrel = barrel;
+	Turret = turret;
 }
 
 // Called every frame
