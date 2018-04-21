@@ -3,7 +3,6 @@
 #include "Tank.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
-#include "TankAimingComponent.h"
 #include "Projectile.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
@@ -20,14 +19,6 @@ ATank::ATank()
 
 }
 
-void ATank::AimAt(FVector hitLocation)
-{
-	if (ensure(TankAimingComponent))
-	{
-		TankAimingComponent->AimAt(hitLocation, LaunchSpeed);
-	}
-}
-
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
@@ -39,8 +30,6 @@ void ATank::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No projectile blueprint set in Tank blueprint, using default"));  // TODO
 	}
-
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 void ATank::Fire()
@@ -60,7 +49,7 @@ void ATank::Fire()
 
 			if (projectile)
 			{
-				projectile->LaunchProjectile(LaunchSpeed);
+				projectile->LaunchProjectile(1);
 			}
 
 			LastFireTime = FPlatformTime::Seconds();

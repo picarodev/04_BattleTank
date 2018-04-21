@@ -2,8 +2,6 @@
 
 #pragma once
 
-class UTankAimingComponent;
-class UTankMovementComponent;
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -21,26 +19,14 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
-    void AimAt(FVector hitLocation);
-
     UFUNCTION(BlueprintCallable, Category = "Actions")
     void Fire();
-
-protected:
-	UPROPERTY(BlueprintReadOnly)
-    UTankAimingComponent* TankAimingComponent = nullptr;
-
-	//UPROPERTY(BlueprintReadOnly)
-	//UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:	
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
     
 	
-    UPROPERTY(EditDefaultsOnly, Category = "Firing")
-    float LaunchSpeed = 3000;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 

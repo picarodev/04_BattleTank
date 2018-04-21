@@ -11,16 +11,10 @@
 
 
 
-ATank* ATankPlayerController::GetControlledTank() const
-{
-    auto tank = Cast<ATank>(GetPawn());
-    return tank;
-}
-
 void ATankPlayerController::BeginPlay()
 {
     Super::BeginPlay();
-	ATank* controlledTank = GetControlledTank();
+	APawn* controlledTank = GetPawn();
 
     if (ensure(controlledTank))
     {
@@ -62,13 +56,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& hitLocation) const
     FVector2D screenLocation = GetScreenLocation();
     FVector worldLocation;
     FVector worldDirection;
-    if (GetLookDirection(screenLocation, worldLocation, worldDirection))
-    {
-        if (GetLookVectorHitLocation(worldLocation, worldDirection, hitLocation))
-        {
-            GetControlledTank()->AimAt(hitLocation);
-        }
-    }
+	if (GetLookDirection(screenLocation, worldLocation, worldDirection))
+	{
+		return GetLookVectorHitLocation(worldLocation, worldDirection, hitLocation);
+	}
 
     return false;
 }
@@ -110,14 +101,14 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector worldLocation, FVec
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	ATank* controlledTank = GetControlledTank();
-    if (ensure(controlledTank))
+	UTankAimingComponent* aimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(aimingComponent))
     {
         FVector hitLocation;
         
         if (GetSightRayHitLocation(hitLocation))
         {
-
+			aimingComponent->AimAt(hitLocation);
         }
     }
 }

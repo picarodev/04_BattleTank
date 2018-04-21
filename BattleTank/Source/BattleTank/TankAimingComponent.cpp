@@ -74,7 +74,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
 	}
 }
 
-void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector hitLocation)
 {
     if (ensure(Barrel))
     {
