@@ -101,14 +101,17 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector worldLocation, FVec
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	UTankAimingComponent* aimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (ensure(aimingComponent))
-    {
-        FVector hitLocation;
-        
-        if (GetSightRayHitLocation(hitLocation))
-        {
-			aimingComponent->AimAt(hitLocation);
-        }
-    }
+	if (GetPawn())
+	{
+		UTankAimingComponent* aimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+		if (ensure(aimingComponent))
+		{
+			FVector hitLocation;
+
+			if (GetSightRayHitLocation(hitLocation))
+			{
+				aimingComponent->AimAt(hitLocation);
+			}
+		}
+	}
 }
