@@ -24,6 +24,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float TrackMaxDrivingForce = 400000.0f;
 
+	UFUNCTION(BlueprintCallable)
+	void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+
 private:
 	UTankTrack();
 
