@@ -15,8 +15,6 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
-	void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction);
-
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float throttle);
 	
@@ -30,4 +28,8 @@ public:
 private:
 	UTankTrack();
 
+	void ApplySidewaysForce();
+	void DriveTrack();
+
+	float CurrentThrottle = 0.0;
 };
