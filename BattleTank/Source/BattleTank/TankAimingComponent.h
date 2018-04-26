@@ -44,8 +44,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Actions")
 	void Fire();
 
+    EFiringStatus GetFiringState() const;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 3000;
+	float LaunchSpeed = 6000;
 
 
 protected:

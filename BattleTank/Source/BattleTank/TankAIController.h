@@ -24,6 +24,7 @@ private:
 
     APawn* GetPlayerTank() const;
 
-	float AcceptanceRadius = 3000;
+    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 6000;
 	
 };
