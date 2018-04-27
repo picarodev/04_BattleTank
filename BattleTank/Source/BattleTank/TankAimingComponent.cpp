@@ -47,7 +47,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (!IsReloaded())
+    if (AmmoCount <= 0)
+    {
+        FiringStatus = EFiringStatus::OutOfAmmo;
+    }
+	else if (!IsReloaded())
 	{
 		FiringStatus = EFiringStatus::Reloading;
 	}
@@ -134,7 +138,7 @@ void UTankAimingComponent::AimAt(FVector hitLocation)
 
 void UTankAimingComponent::Fire()
 {
-	if (FiringStatus != EFiringStatus::Reloading)
+	if (FiringStatus != EFiringStatus::Reloading && AmmoCount > 0)
 	{
 		if (ensure(Barrel) && ensure(ProjectileBlueprint))
 		{
@@ -150,6 +154,7 @@ void UTankAimingComponent::Fire()
 				projectile->LaunchProjectile(LaunchSpeed);
 			}
 
+            AmmoCount--;
 			LastFireTime = FPlatformTime::Seconds();
 		}
 	}
