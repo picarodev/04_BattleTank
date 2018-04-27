@@ -138,7 +138,8 @@ void UTankAimingComponent::AimAt(FVector hitLocation)
 
 void UTankAimingComponent::Fire()
 {
-	if (FiringStatus != EFiringStatus::Reloading && AmmoCount > 0)
+	if (FiringStatus == EFiringStatus::Locked ||
+        FiringStatus == EFiringStatus::Aiming)
 	{
 		if (ensure(Barrel) && ensure(ProjectileBlueprint))
 		{
