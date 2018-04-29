@@ -3,6 +3,7 @@
 #pragma once
 
 class UProjectileMovementComponent;
+class UParticleSystemComponent;
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -22,7 +23,14 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
 	UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
+
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UStaticMeshComponent* CollisionMesh = nullptr;
+
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UParticleSystemComponent* LaunchBlast = nullptr;
 
 public:	
 	// Called every frame
