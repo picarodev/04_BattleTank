@@ -55,9 +55,11 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
 
-    UPROPERTY(BlueprintReadOnly, Category = "State")
-    int AmmoCount = 5;
+    UPROPERTY(EditDefaultsOnly, Category = "Firing")
+    int32 AmmoCount = 50;
 
+    UPROPERTY(EditDefaultsOnly, Category = "Firing")
+    double ReloadTimeInSeconds = 3.0;
 
 private:
 	bool IsReloaded() const;
@@ -66,8 +68,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	double ReloadTimeInSeconds = 3.0;
+
 
 	double LastFireTime = -1e6;
 
