@@ -41,6 +41,11 @@ private:
 
     UPROPERTY(VisibleAnywhere, Category = "Components")
     URadialForceComponent* ExplosionForce = nullptr;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+    float DestructionDelay = 20.0;
+
+    void OnHitTimerExpiration();
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

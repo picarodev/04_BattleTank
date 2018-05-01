@@ -4,6 +4,8 @@
 #include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
+#include "Runtime/Engine/Public/TimerManager.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 
 
@@ -37,11 +39,26 @@ AProjectile::AProjectile()
 
 }
 
+void AProjectile::OnHitTimerExpiration()
+{
+    this->Destroy();
+}
+
 void AProjectile::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
 {
     LaunchBlast->Deactivate();
     ImpactBlast->Activate();
     ExplosionForce->FireImpulse();
+
+    SetRootComponent(ImpactBlast);
+    CollisionMesh->DestroyComponent();
+
+    
+    FTimerHandle timerHandle;
+    GetWorld()->GetTimerManager().SetTimer(timerHandle,
+        this,
+        &AProjectile::OnHitTimerExpiration,
+        DestructionDelay);
 }
 
 // Called when the game starts or when spawned
