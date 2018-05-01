@@ -6,6 +6,7 @@
 #include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Public/TimerManager.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 
 
@@ -53,6 +54,14 @@ void AProjectile::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImp
     SetRootComponent(ImpactBlast);
     CollisionMesh->DestroyComponent();
 
+    UGameplayStatics::ApplyRadialDamage(
+        this,
+        ProjectileDamage,
+        GetActorLocation(),
+        ExplosionForce->Radius,
+        UDamageType::StaticClass(),
+        TArray<AActor*>()
+    );
     
     FTimerHandle timerHandle;
     GetWorld()->GetTimerManager().SetTimer(timerHandle,
