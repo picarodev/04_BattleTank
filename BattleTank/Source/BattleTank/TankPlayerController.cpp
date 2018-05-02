@@ -10,6 +10,27 @@
 
 
 
+void ATankPlayerController::OnTankDestroyed()
+{
+    UE_LOG(LogTemp, Warning, TEXT("Player Tank Controller notified of tank destruction"));
+}
+
+void ATankPlayerController::SetPawn(APawn* InPawn)
+{
+    Super::SetPawn(InPawn);
+
+    if (InPawn)
+    {
+        auto possessedTank = Cast<ATank>(InPawn);
+
+        if (ensure(possessedTank))
+        {
+            FScriptDelegate del;
+            del.BindUFunction(this, "OnTankDestroyed");
+            possessedTank->OnTankDestroyed.AddUnique(del);
+        }
+    }
+}
 
 void ATankPlayerController::BeginPlay()
 {

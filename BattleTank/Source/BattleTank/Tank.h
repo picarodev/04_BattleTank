@@ -7,6 +7,8 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDestroyed);
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -17,6 +19,8 @@ public:
 
     UFUNCTION(BlueprintPure, Category = "Health")
     float GetHealthPercent() const;
+
+    FTankDestroyed OnTankDestroyed;
 
 private:
 	// Sets default values for this pawn's properties

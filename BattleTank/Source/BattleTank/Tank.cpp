@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
-
+#include "TankPlayerController.h"
+#include "TankAIController.h"
 
 float ATank::GetHealthPercent() const
 {
@@ -14,6 +15,7 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+
 }
 
 float ATank::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -25,6 +27,7 @@ float ATank::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AControll
     if (CurrentHealth <= 0)
     {
         UE_LOG(LogTemp, Warning, TEXT("Tank destroyed!!!"));
+        OnTankDestroyed.Broadcast();
     }
     return damageToApply;
 }

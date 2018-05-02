@@ -14,8 +14,14 @@ UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
+public:
+    //UFUNCTION(BlueprintCallable, Category = "Setup")
+    UFUNCTION()
+    void OnTankDestroyed();
+
 private:
+    void SetPawn(APawn* InPawn) override;
 
     void Tick(float DeltaTime) override;
     

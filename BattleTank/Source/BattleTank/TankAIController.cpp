@@ -4,9 +4,32 @@
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
+#include "GameFramework/Pawn.h"
 #include "BattleTank.h"
 
 
+void ATankAIController::OnTankDestroyed()
+{
+    UE_LOG(LogTemp, Warning, TEXT("AI Tank Controller notified of tank destruction"));
+}
+
+void ATankAIController::SetPawn(APawn* InPawn)
+{
+    Super::SetPawn(InPawn);
+
+    if (InPawn)
+    {
+        auto possessedTank = Cast<ATank>(InPawn);
+
+        if (possessedTank)
+        {
+            FScriptDelegate del;
+            del.BindUFunction(this, "OnTankDestroyed");
+            possessedTank->OnTankDestroyed.AddUnique(del);
+        }
+    }
+}
 
 void ATankAIController::Tick(float DeltaTime)
 {

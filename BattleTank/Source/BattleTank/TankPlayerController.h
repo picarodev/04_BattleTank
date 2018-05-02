@@ -24,6 +24,10 @@ protected:
 	void FoundAimingComponent(UTankAimingComponent* aimingComponentReference);
 
 public:
+    UFUNCTION()
+    void OnTankDestroyed();
+
+    void SetPawn(APawn* InPawn) override;
 
     void BeginPlay() override;
 
