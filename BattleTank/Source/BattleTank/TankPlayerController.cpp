@@ -106,7 +106,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector worldLocation, FVec
 {
     FHitResult hit;
     FCollisionQueryParams traceParameters(FName(TEXT("")), false, GetOwner());
-    ECollisionChannel channel = ECollisionChannel::ECC_Visibility;
+    ECollisionChannel channel = ECollisionChannel::ECC_Camera;
     FVector end = worldLocation + worldDirection * LineTraceRange;
     GetWorld()->LineTraceSingleByChannel(
         OUT hit,
