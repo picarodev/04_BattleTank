@@ -22,14 +22,18 @@ public:
 
     FTankDestroyed OnTankDestroyed;
 
+protected:
+    void BeginPlay() override;
+
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();
 
     UPROPERTY(EditDefaultsOnly, Category = "Setup")
     int32 StartingHealth = 100.0;
-    
+
     UPROPERTY(VisibleAnywhere, Category = "Health")
-    int32 CurrentHealth = StartingHealth;
+    int32 CurrentHealth = 0;
     
 };

@@ -12,6 +12,11 @@
 void ATankAIController::OnTankDestroyed()
 {
     UE_LOG(LogTemp, Warning, TEXT("AI Tank Controller notified of tank destruction"));
+    
+    if (GetPawn())
+    {
+        GetPawn()->DetachFromControllerPendingDestroy();
+    }
 }
 
 void ATankAIController::SetPawn(APawn* InPawn)

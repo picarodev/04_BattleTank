@@ -13,6 +13,12 @@
 void ATankPlayerController::OnTankDestroyed()
 {
     UE_LOG(LogTemp, Warning, TEXT("Player Tank Controller notified of tank destruction"));
+    StartSpectatingOnly();
+}
+
+void ATankPlayerController::StartSpectatingOnly() 
+{
+    Super::StartSpectatingOnly();
 }
 
 void ATankPlayerController::SetPawn(APawn* InPawn)

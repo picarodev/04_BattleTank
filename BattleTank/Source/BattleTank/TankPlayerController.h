@@ -27,6 +27,8 @@ public:
     UFUNCTION()
     void OnTankDestroyed();
 
+    void StartSpectatingOnly() override;
+
     void SetPawn(APawn* InPawn) override;
 
     void BeginPlay() override;
