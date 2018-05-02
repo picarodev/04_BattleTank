@@ -17,7 +17,7 @@ class BATTLETANK_API ATank : public APawn
 public:
     float TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-    UFUNCTION(BlueprintPure, Category = "Health")
+    UFUNCTION(BlueprintCallable, Category = "Health")
     float GetHealthPercent() const;
 
     FTankDestroyed OnTankDestroyed;
